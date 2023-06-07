@@ -1,0 +1,38 @@
+<script>
+    (function () {
+        var customPageLoaded = function (selector, callback) {
+            var getElement = function () {
+                return document.querySelectorAll(selector);
+            };
+
+            var elementInDomCallback = function () {
+                if (callback && typeof callback === 'function') {
+                    setTimeout(callback, 1000);
+                }
+            };
+
+            var checkingInterval = null,
+                maxCallTime = 8000,
+                checkElementTime = 450,
+                clearTimeoutInterval = function () {
+                    if (checkingInterval) {
+                        clearInterval(checkingInterval);
+                    }
+                },
+                waitElement = function () {
+                    if (getElement().length) {
+                        elementInDomCallback();
+                        clearTimeoutInterval();
+                    }
+                };
+
+            checkingInterval = window.setInterval(waitElement, checkElementTime);
+            setTimeout(clearTimeoutInterval, maxCallTime);
+        };
+
+        customPageLoaded('#main nb-container', function () {
+            // CODE HERE WHEN SELECTOR ABOVE IS DETECTED AFTER LOAD
+            
+        });
+    })();
+</script>
